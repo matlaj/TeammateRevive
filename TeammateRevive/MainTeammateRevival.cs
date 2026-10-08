@@ -42,7 +42,7 @@ namespace TeammateRevive
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "KosmosisDire";
         public const string PluginName = "TeammateRevival";
-        public const string PluginVersion = "4.2.1";
+        public const string PluginVersion = "4.2.2";
         
         #endregion
         
@@ -98,7 +98,6 @@ namespace TeammateRevive
             contentManager = new ContentManager(rules, run, deathCurseArtifact);
             
             Log.Init(pluginConfig, Logger);
-            ReviveHelper.Init();
             CustomResources.LoadCustomResources();
             HideDeathCurseContent.Init(pluginConfig);
             contentManager.Init();

@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>libs\BepInEx\0Harmony.dll</HintPath>
     </Reference>
@@ -135,7 +139,7 @@
     <Reference Include="Rewired_CSharp">
       <HintPath>libs\Rewired_CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="RoR2">
+    <Reference Include="RoR2" Publicize="true">
       <HintPath>libs\RoR2.dll</HintPath>
     </Reference>
     <Reference Include="RoR2BepInExPack">

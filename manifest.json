@@ -1,13 +1,17 @@
 ﻿{
 	"name": "TeammateRevival",
-	"version_number": "4.1.4",
+	"version_number": "4.2.2",
 	"author": "KosmosisDire",
 	"website_url": "https://github.com/KosmosisDire/TeammateRevive",
 	"description": "Survivors can revive fallen teammates, but it comes at the price of their own health and safety! Optional death curse mode. Highly configurable. ( multiplayer heal spawn )",
 	"dependencies": [
-		"bbepis-BepInExPack-5.4.1902",
-		"RiskofThunder-HookGenPatcher-1.2.3",
-		"tristanmcpherson-R2API-4.3.21"
+		"bbepis-BepInExPack-5.4.2122",
+		"RiskofThunder-HookGenPatcher-1.2.9",
+		"RiskofThunder-R2API_Core-5.3.0",
+		"RiskofThunder-R2API_Networking-1.0.4",
+		"RiskofThunder-R2API_Prefab-1.1.1",
+		"RiskofThunder-R2API_Items-1.0.8",
+		"RiskofThunder-R2API_Language-1.1.0",
+		"RiskofThunder-R2API_ContentManagement-1.0.11"
 	]
 }
-
