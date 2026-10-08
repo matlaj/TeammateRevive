@@ -6,21 +6,21 @@ on:
     tags:
       - "*"
 
+permissions:
+  contents: write
+
 jobs:
   # Build on Linux because it's faster and .NET is cross-platform
   release-linux:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: little-core-labs/get-git-tag@v3.0.1
-        id: get_version
-
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '10.0.x'
 
       - name: Install dependencies
         run: dotnet restore
@@ -37,16 +37,17 @@ jobs:
           cp readme/icon.png mod/
 
       - name: Package mod as a zip
-        uses: vimtor/action-zip@v1
-        with:
-          files: mod
-          dest: mod.zip
+        run: cd mod && zip -r ../mod.zip .
 
       - name: Upload mod package to release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: mod.zip
-          asset_name: TeammateRevive-${{ steps.get_version.outputs.tag }}.zip
-          tag: ${{ github.ref }}
-          overwrite: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          asset="TeammateRevive-$TAG.zip"
+          mv mod.zip "$asset"
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" "$asset" --clobber
+          else
+            gh release create "$TAG" "$asset" --title "$TAG" --generate-notes
+          fi
