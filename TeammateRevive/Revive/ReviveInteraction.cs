@@ -18,7 +18,7 @@ namespace TeammateRevive.Revive
         public Interactability GetInteractability(Interactor activator)
         {
             var networkUser = Util.LookUpBodyNetworkUser(activator.gameObject);
-            if (networkUser && networkUser.master.inventory.GetItemCount(CharonsObol.Index) > 0)
+            if (networkUser && CharonsObol.GetSpendableCount(networkUser.master.inventory) > 0)
             {
                 return Interactability.Available;
             }
@@ -51,9 +51,8 @@ namespace TeammateRevive.Revive
                 return;
             }
 
-            var playerHasRespawnItem = player.GetBody().inventory.GetItemCount(CharonsObol.Index) > 0;
-
-            if (!playerHasRespawnItem)
+            var inventory = player.master.master.inventory;
+            if (CharonsObol.GetSpendableCount(inventory) <= 0)
             {
                 //TODO: Fix
                 //ChatMessage.SendColored(Language.GetString(LanguageConsts.TEAMMATE_REVIVAL_UI_NO_OBOL), Color.red);
@@ -61,7 +60,7 @@ namespace TeammateRevive.Revive
             }
 
             PlayersTracker.instance.Respawn(dead);
-            player.master.master.inventory.RemoveItem(CharonsObol.Index);
+            CharonsObol.TrySpend(inventory);
         }
 
         public bool ShouldIgnoreSpherecastForInteractibility(Interactor activator)

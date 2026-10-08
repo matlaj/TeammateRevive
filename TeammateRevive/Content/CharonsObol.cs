@@ -43,5 +43,28 @@ namespace TeammateRevive.Content
         }
 
         public override void OnItemsAvailable() => Index = ItemCatalog.FindItemIndex(Name);
+
+        /// <summary>
+        /// Number of Obols the player can spend on an instant revive. Shared (channeled) Obols only mirror
+        /// a nearby teammate's item, so they don't count, and disabled Obols can't be used at all.
+        /// </summary>
+        public static int GetSpendableCount(Inventory inventory)
+        {
+            if (inventory.GetItemCountEffective(Index) <= 0) return 0;
+            return inventory.GetItemCountTemp(Index) + inventory.GetItemCountRented(Index) + inventory.GetItemCountPermanent(Index);
+        }
+
+        /// <summary>
+        /// Consumes one spendable Obol. Temporary and rented ones go first, since the game takes those back anyway.
+        /// </summary>
+        public static bool TrySpend(Inventory inventory)
+        {
+            if (GetSpendableCount(inventory) <= 0) return false;
+
+            if (inventory.GetItemCountTemp(Index) > 0) inventory.RemoveItemTemp(Index);
+            else if (inventory.GetItemCountRented(Index) > 0) inventory.RemoveItemRented(Index);
+            else inventory.RemoveItemPermanent(Index);
+            return true;
+        }
     }
 }
