@@ -32,7 +32,10 @@ jobs:
         run: |
           mkdir mod
           cp TeammateRevive/bin/Release/TeammateRevive.dll mod/
+          # the mod loads its text from Localization/ next to the DLL
+          cp -r TeammateRevive/bin/Release/Localization mod/
           cp README.md mod/
+          cp CHANGELOG.md mod/
           cp manifest.json mod/
           cp readme/icon.png mod/
 
